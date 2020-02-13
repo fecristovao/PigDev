@@ -1,4 +1,9 @@
 #include "PIG.h"
+#include "CPigForm.h"
+#include "CPigComponente.h"
+#include "CPigBotao.h"
+#include "CPigCaixaTexto.h"
+#include "CPigCheckBox.h"
 
 PIG_Evento evento;          //evento ser tratadoi a cada pssada do loop principal
 PIG_Teclado meuTeclado;     //variável como mapeamento do teclado
