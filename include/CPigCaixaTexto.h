@@ -124,23 +124,27 @@ int TrataEventoMouse(PIG_Evento evento){
     CMouse::PegaXY(p.x,p.y);
 
     SDL_Rect r = {x+margemHor,y,larg-2*margemHor,alt};
+    //printf("Mouse %d,%d   {%d,%d,%d,%d}\n",p.x,p.y,r.x,r.y,r.h,r.w);
+
     if (SDL_PointInRect(&p,&r)){
         //printf("dentro\n");
         int delta = p.x-xBase;
         //printf("delta %d\n",delta);
         int largParcial = 0;
+        int largUltimaLetra = 0;
         char aux[2]="";
         for (int i=0;i<=strlen(texto);i++){
-            //char aux[300]="";
-            //strncpy(aux,texto,i);
+            char aux[300]="";
+            strncpy(aux,texto,i);
             largParcial += CalculaLarguraPixels(aux,fonteTexto);
             //printf("Pos %d (larg %d %s)\n",i,largParcial,aux);
-            if (delta<largParcial){
+            if (delta<largParcial-largUltimaLetra){
                 posCursor = i-1;
                 AjustaAlinhamento();
                 return 1;
             }
             aux[0] = texto[i];
+            largUltimaLetra = largParcial;
         }
         posCursor = strlen(texto);
         AjustaAlinhamento();

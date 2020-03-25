@@ -120,7 +120,7 @@ public:
                 ultimoEvento.mouse.numeroJanela = event.window.windowID-JANELA_INICIAL;
                 ultimoEvento.mouse.cliques = event.button.clicks;
                 ultimoEvento.mouse.posX = event.button.x;
-                ultimoEvento.mouse.posY = CGerenciadorJanelas::GetAltura(ultimoEvento.mouse.numeroJanela) - event.button.y;
+                ultimoEvento.mouse.posY = CGerenciadorJanelas::GetAltura(ultimoEvento.mouse.numeroJanela) - event.button.y-1;
                 break;
             case SDL_MOUSEBUTTONUP:
                 ultimoEvento.tipoEvento = EVENTO_MOUSE;
@@ -129,7 +129,7 @@ public:
                 ultimoEvento.mouse.numeroJanela = event.window.windowID-JANELA_INICIAL;
                 ultimoEvento.mouse.cliques = event.button.clicks;
                 ultimoEvento.mouse.posX = event.button.x;
-                ultimoEvento.mouse.posY = CGerenciadorJanelas::GetAltura(ultimoEvento.mouse.numeroJanela) - event.button.y;
+                ultimoEvento.mouse.posY = CGerenciadorJanelas::GetAltura(ultimoEvento.mouse.numeroJanela) - event.button.y-1;
                 break;
             case SDL_MOUSEMOTION:
                 ultimoEvento.tipoEvento = EVENTO_MOUSE;
@@ -139,8 +139,7 @@ public:
                 ultimoEvento.mouse.posY = CGerenciadorJanelas::GetAltura(ultimoEvento.mouse.numeroJanela) - event.motion.y-1;
                 ultimoEvento.mouse.relX = event.motion.xrel;
                 ultimoEvento.mouse.relY = -event.motion.yrel;
-                //if (cursorPadrao!=0)
-                    CMouse::Move(ultimoEvento.mouse.posX, CGerenciadorJanelas::GetAltura(ultimoEvento.mouse.numeroJanela)-(ultimoEvento.mouse.posY));//CGerenciadorJanelas::GetAltura(ultimoEvento.mouse.numeroJanela)-ultimoEvento.mouse.posY);
+                CMouse::Move(ultimoEvento.mouse.posX, ultimoEvento.mouse.posY);
                 break;
             case SDL_MOUSEWHEEL:
                 ultimoEvento.tipoEvento = EVENTO_MOUSE;
