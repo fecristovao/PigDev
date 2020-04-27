@@ -1,11 +1,7 @@
 #include "PIG.h"
 #include "CPigForm.h"
-#include "CPigComponente.h"
-#include "CPigBotao.h"
-#include "CPigCaixaTexto.h"
-#include "CPigCheckBox.h"
 
-PIG_Evento evento;          //evento ser tratadoi a cada pssada do loop principal
+PIG_Evento evento;          //evento ser tratado a cada passada do loop principal
 PIG_Teclado meuTeclado;     //variável como mapeamento do teclado
 
 int main( int argc, char* args[] ){
@@ -24,7 +20,7 @@ int main( int argc, char* args[] ){
 
         //aqui o evento deve ser tratado e as coisas devem ser atualizadas
 
-        //será feita aprepação do frame que será exibido na tela
+        //será feita a preparaçãoo do frame que será exibido na tela
         IniciaDesenho();
 
         //todas as chamadas de desenho devem ser feitas aqui na ordem desejada

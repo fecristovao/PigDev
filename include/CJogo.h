@@ -409,6 +409,30 @@ public:
         fontes[numFonte]->EscreveStringLongaEsquerda(texto,x,y,largMax,espacoEntreLinhas);
     }
 
+    inline std::vector<std::string> ExtraiLinhasString(std::string texto,int largMax,int numFonte=0){
+
+        return fontes[numFonte]->ExtraiLinhasString(texto,largMax);
+
+    }
+
+    inline int GetAlturaLetra(char letra,int numFonte = 0){
+
+        return fontes[numFonte]->GetAlturaLetra(letra);
+
+    }
+
+    inline int GetLarguraLetra(char letra,int numFonte = 0){
+
+        return fontes[numFonte]->GetLarguraLetra(letra);
+
+    }
+
+    inline int GetTamanhoFonte(int numFonte = 0){
+
+        return fontes[numFonte]->GetTamanhoFonte();
+
+    }
+
     SDL_Surface *GetGlyph(char *ch,int numFonte=0){
         return fontes[numFonte]->GetGlyph(ch);
     }

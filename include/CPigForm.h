@@ -1,3 +1,12 @@
+#include "CPigComponente.h"
+#include "CPigBotao.h"
+#include "CPigCaixaTexto.h"
+#include "CPigCampoTextoESenha.h"
+#include "CPigAreaDeTexto.h"
+#include "CPigItemCheck.h"
+#include "CPigRadioBox.h"
+#include "CPigCheckBox.h"
+
 class CPigForm{
 
 private:

@@ -4,10 +4,8 @@ class CPigBotao: public CPigComponente{
 
 private:
 
-char *texto;
 int tecla;
 int largFrame;
-int fonteTexto;
 Timer timer;
 AcaoBotao acao;
 void *param;
@@ -49,43 +47,31 @@ int OnMouseClick(){
     if (timer) delete timer;
     timer = new CTimer(false);
     if (acao) acao(id,param);//rever se NULL é necessário
-    if (audio>=0) PlayAudio(audio);
+    if (audioComponente>=0) PlayAudio(audioComponente);
 }
 
 public:
 
-CPigBotao(int idComponente,int px, int py, int alt,int larg,char *nomeArq, int retiraFundo=1,int janela=0):CPigComponente(idComponente,px,py,alt,larg,nomeArq,retiraFundo,janela){
-    texto = NULL;//sem mensagem nem hint
+CPigBotao(int idComponente,int px, int py, int alt,int larg,char *nomeArq, int retiraFundo=1,int janela=0):
+    CPigComponente(idComponente,px,py,alt,larg,nomeArq,retiraFundo,janela){
+    label = NULL;//sem mensagem nem hint
     tecla = -1;//sem tecla de atalho
     largFrame = largOriginal/4;//a imgem deve ter 4 frames (normal,mouse_over,acionado,desabilitado)
     timer = NULL;//sem timer para "soltar" o botão
-    fonteTexto = 0;//fonte padrão
     acao = NULL;//não tem ação registrada
     param = NULL;//não tem parâmetro associado à ação
+    SetPosicaoPadraoLabel(COMPONENTE_CENTRO);
     DefineEstado(COMPONENTE_NORMAL); //começa normal
 }
 
 ~CPigBotao(){
-    if (texto)
-        free(texto);
     if (timer)
         delete timer;
-}
-
-void DefineTexto(char *mensagem){
-    if (texto)
-        free(texto);
-    texto = (char*) malloc(strlen(mensagem));
-    strcpy(texto,mensagem);
 }
 
 void DefineAcao(AcaoBotao funcao,void *parametro){
     acao = funcao;
     param = parametro;
-}
-
-void DefineFonteTexto(int fonte){
-    fonteTexto = fonte;
 }
 
 void DefineAtalho(int teclaAtalho){
@@ -139,8 +125,7 @@ int Desenha(){
     }
 
     SDL_RenderCopyEx(renderer, text, &frame,&dest,-angulo,&pivoRelativo,flip);
-    if (texto)
-        EscreverCentralizada(texto,x+larg/2,y+(alt-20)/2,fonteTexto);
+    DesenhaLabel();
 
     //int mx,my;
     //CMouse::PegaXY(mx,my);

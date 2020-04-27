@@ -32,7 +32,6 @@ Versão 0.7.2 da Biblioteca PIG.h
 #include "CGerenciadorControles.h"
 #include "CJogo.h"
 
-
 /********************************
 / Variáveis Globais
 /********************************/
@@ -869,7 +868,7 @@ retorno:
 inteiro que representa o total de pixels (no eixo x) necessários para escrever a string.
 ********************************/
 int CalculaLarguraPixels(char *str,int numFonte=0){
-    return jogo->GetLarguraPixels(str);
+    return jogo->GetLarguraPixels(str,numFonte);
 }
 
 /********************************
@@ -938,6 +937,22 @@ numFonte (entrada, passagem por valor): número da fonte a ser utilizada. Caso o 
 ********************************/
 void EscreverLongaEsquerda(char *str,int posicaoX,int posicaoY,int largMax,int espacoEntreLinhas,int numFonte=0){
     jogo->EscreverLongaEsquerda(str,posicaoX,posicaoY,largMax,espacoEntreLinhas,numFonte);
+}
+
+std::vector<std::string> ExtraiLinhasString(std::string texto,int largMax,int numFonte=0){
+        return jogo->ExtraiLinhasString(texto,largMax,numFonte);
+}
+
+int GetAlturaLetra(char letra,int numFonte = 0){
+    return jogo->GetAlturaLetra(letra,numFonte);
+}
+
+int GetLarguraLetra(char letra,int numFonte = 0){
+    return jogo->GetLarguraLetra(letra,numFonte);
+}
+
+int GetTamanhoFonte(int numFonte = 0){
+    return jogo->GetTamanhoFonte(numFonte);
 }
 
 /********************************

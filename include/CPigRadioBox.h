@@ -1,10 +1,11 @@
-class CPigCheckBox: public CPigComponente{
+class CPigRadioBox: public CPigComponente{
 
 private:
 
 int largItem,altItem;//altura e largura da imagem de cada item
 char nomeImgItem[80];//nome da imagem de cada item
 int espacoLinha; //espaço vertical entre os itens
+int itemMarcado;
 PIG_PosicaoComponente posItens;
 std::vector <CPigItemCheck*> itens;
 
@@ -14,37 +15,38 @@ void IniciaBase(int alturaItem, int larguraItem, int espacoVertical, char *nomeA
     largItem = larguraItem;
     altItem = alturaItem;
     espacoLinha = espacoVertical;
+    itemMarcado = -1;
     posItens = COMPONENTE_DIREITA;//só pode ser posicionamento à esquerda ou à direita
 }
 
 public:
 
-CPigCheckBox(int idComponente, int posX, int posY, int largura, char *nomeArqFundo, char *nomeArqItem, int alturaItem, int larguraItem, int espacoVertical, int retiraFundo=1):
-    CPigComponente(idComponente,posX,posY,0,largura,nomeArqFundo,retiraFundo){
+CPigRadioBox(int idComponente, int posX, int posY, int largura, char *nomeArqFundo, char *nomeArqItem, int alturaItem, int larguraItem, int espacoVertical):
+    CPigComponente(idComponente,posX,posY,0,largura,nomeArqFundo){
     IniciaBase(alturaItem, larguraItem, espacoVertical, nomeArqItem);
 }
 
-CPigCheckBox(int idComponente, int posX, int posY, int largura, char *nomeArqItem,int alturaItem, int larguraItem, int espacoVertical):
+CPigRadioBox(int idComponente, int posX, int posY, int largura, char *nomeArqItem,int alturaItem, int larguraItem, int espacoVertical):
     CPigComponente(idComponente,posX,posY,0,largura){
     IniciaBase(alturaItem, larguraItem, espacoVertical, nomeArqItem);
 }
 
-~CPigCheckBox(){
+~CPigRadioBox(){
     for (CPigItemCheck* x: itens)
         delete x;
     itens.clear();
 }
 
-void CriaItem(char *itemLabel, bool itemMarcado, bool itemHabilitado, int audio=-1, char *hintMsg=NULL, int retiraFundo=1,int janela=0){
+void CriaItem(char *itemLabel, bool itemHabilitado, int audio=-1, char *hintMsg=NULL, int retiraFundo=1,int janela=0){
     CPigItemCheck *item = new CPigItemCheck(itens.size(),x,y+(espacoLinha)*(itens.size()),altItem,largItem,larg,nomeImgItem,itemLabel,retiraFundo,janela);
     itens.push_back(item);
     alt += espacoLinha;
     SetDimensoes(alt,larg);
     item->SetHint(hintMsg);
     if (audio==-1)
-        audio = audioComponente;//audio padrao do checkbox
+        audio = audioComponente;//audio padrao do radiobox
     item->SetAudio(audio);
-    item->SetMarcado(itemMarcado);
+    item->SetMarcado(false);
     item->SetHabilitado(itemHabilitado);
 }
 
@@ -79,19 +81,29 @@ int Desenha(){
 }
 
 int TrataEvento(PIG_Evento evento){
-    int resp = 0;
-    for (CPigItemCheck* x: itens)
-        resp += x->TrataEvento(evento);
-     return resp;
+    itemMarcado = -1;
+    for (int i=0;i<itens.size();i++){
+        if (itens[i]->TrataEvento(evento)==1 && itens[i]->GetMarcado()){
+            itemMarcado = i;
+        }
+    }
+    if (itemMarcado!=-1){
+        for (int i=0;i<itens.size();i++){
+            if (i!=itemMarcado)
+                itens[i]->SetMarcado(false);
+        }
+        return 1;
+    }
+    return 0;
 }
 
-int GetMarcado(int indice){
-    return itens[indice]->GetMarcado();
+int GetMarcado(){
+    return itemMarcado;
 }
 
-int SetMarcado(int indice, bool marcado){
+int SetMarcado(int indice){
     if (indice<0||indice>=itens.size()) return 0;
-    itens[indice]->SetMarcado(marcado);
+    itens[indice]->SetMarcado(true);
     return 1;
 }
 
@@ -143,4 +155,5 @@ void DefineEstado(PIG_EstadoComponente estadoComponente){
 }
 
 };
+
 
